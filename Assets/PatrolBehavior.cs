@@ -32,6 +32,8 @@ public class PatrolBehavior : MonoBehaviour
          _startPosition = _points[_currentPoint];
          _nextPosition = _points[(_currentPoint + 1) % _points.Count]; 
 
+         _nextPosition.gameObject.SetActive(true);
+         
         _currentTime += Time.deltaTime;
         float travelTime = GetTravelTime(_startPosition, _nextPosition);
         float step = _speed * Time.deltaTime;
@@ -48,11 +50,12 @@ public class PatrolBehavior : MonoBehaviour
             _animator.SetBool("Moving",false);
             _animator.SetBool("Idle",true);
             
+            _nextPosition.gameObject.SetActive(false);
+            
             _delayTime += Time.deltaTime;
-
             if (_delayTime >= _delayBeforeNewPoint)
             { 
-                  
+                 
                 _currentPoint = (_currentPoint + 1) % _points.Count;
                 _currentTime = 0f;
                 _delayTime = 0f;
